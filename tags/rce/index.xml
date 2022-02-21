@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog on Mathew Alabi | •Kurrupt68</title>
-    <link>https://Kurrupt68.github.io/post/</link>
-    <description>Recent content in Blog on Mathew Alabi | •Kurrupt68</description>
+    <title>rce on Mathew Alabi | •Kurrupt68</title>
+    <link>https://Kurrupt68.github.io/tags/rce/</link>
+    <description>Recent content in rce on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/tags/rce/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TryHackMe - Gallery</title>
       <link>https://Kurrupt68.github.io/post/thm-gallery-writeup/</link>
@@ -18,13 +18,12 @@ Try to exploit our image gallery system&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>First post</title>
-      <link>https://Kurrupt68.github.io/post/first-post/</link>
-      <pubDate>Sun, 09 Aug 2020 23:38:49 +0530</pubDate>
+      <title>Gallery - Tryhackme</title>
+      <link>https://Kurrupt68.github.io/thm-gallery-writeup/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://Kurrupt68.github.io/post/first-post/</guid>
-      <description> This is a sample post to check how well indexing works   Oh wow it works reminder to self read the docs.
-  </description>
+      <guid>https://Kurrupt68.github.io/thm-gallery-writeup/</guid>
+      <description></description>
     </item>
     
   </channel>

