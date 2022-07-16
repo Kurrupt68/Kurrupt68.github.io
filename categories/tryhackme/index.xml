@@ -6,7 +6,17 @@
     <description>Recent content in tryhackme on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/categories/tryhackme/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/categories/tryhackme/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TryHackMe - Steel Mountain</title>
+      <link>https://Kurrupt68.github.io/post/thm-steel-mountain/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/post/thm-steel-mountain/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/steelmountain.jpeg&#34; alt=&#34;Header image&#34;&gt;
+Hack into a Mr.Robot themed Windows machine.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>TryHackMe - Gallery</title>
       <link>https://Kurrupt68.github.io/post/thm-gallery-writeup/</link>

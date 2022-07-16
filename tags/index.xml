@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVE</title>
+      <link>https://Kurrupt68.github.io/tags/cve/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/tags/cve/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>metasploit</title>
+      <link>https://Kurrupt68.github.io/tags/metasploit/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/tags/metasploit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tryhackme</title>
+      <link>https://Kurrupt68.github.io/tags/tryhackme/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/tags/tryhackme/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>windows</title>
+      <link>https://Kurrupt68.github.io/tags/windows/</link>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://Kurrupt68.github.io/tags/windows/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>linux</title>
       <link>https://Kurrupt68.github.io/tags/linux/</link>
@@ -31,15 +67,6 @@
       <pubDate>Sat, 19 Feb 2022 00:00:00 +0000</pubDate>
       
       <guid>https://Kurrupt68.github.io/tags/sqli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tryhackme</title>
-      <link>https://Kurrupt68.github.io/tags/tryhackme/</link>
-      <pubDate>Sat, 19 Feb 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://Kurrupt68.github.io/tags/tryhackme/</guid>
       <description></description>
     </item>
     
