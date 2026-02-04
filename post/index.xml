@@ -6,16 +6,7 @@
     <description>Recent content in Blog on Mathew Alabi | •Kurrupt68</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 16 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>DOH STEGFTW </title>
-      <link>https://Kurrupt68.github.io/post/doh-wen-gibaway-please/</link>
-      <pubDate>Sat, 16 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://Kurrupt68.github.io/post/doh-wen-gibaway-please/</guid>
-      <description>&lt;p&gt;Are you there? Are you there?&lt;/p&gt;</description>
-    </item>
-    
+    <lastBuildDate>Tue, 03 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://Kurrupt68.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TryHackMe - Steel Mountain</title>
       <link>https://Kurrupt68.github.io/post/thm-steel-mountain/</link>
@@ -34,16 +25,6 @@ Hack into a Mr.Robot themed Windows machine.&lt;/p&gt;</description>
       <guid>https://Kurrupt68.github.io/post/thm-gallery-writeup/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://Kurrupt68.github.io/gallery.png&#34; alt=&#34;Header image&#34;&gt;
 Try to exploit our image gallery system&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>First post</title>
-      <link>https://Kurrupt68.github.io/post/first-post/</link>
-      <pubDate>Sun, 09 Aug 2020 23:38:49 +0530</pubDate>
-      
-      <guid>https://Kurrupt68.github.io/post/first-post/</guid>
-      <description> This is a sample post to check how well indexing works   Oh wow it works reminder to self read the docs.
-  </description>
     </item>
     
   </channel>
