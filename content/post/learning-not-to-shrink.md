@@ -70,7 +70,7 @@ If you're reading this and any of it sounds familiar, here's what I'd tell you.
 
 Surround yourself with people who are better than you. Not in a way that makes you feel small  in a way that shows you what's possible. My teammates at my MaxHed and Guardians were some of the most driven, excellent people I've come across. For a long time, they were the reason I felt behind. But looking back, they were also the reason I grew and learnt not to settle for less. It's hard to imagine what excellence looks like if you've never been close to it. Find those people. Stay near them. Let their standard become yours, even when the gap feels unbearable.
 
-Good things take time. I spent years trying to perform at the level of people who had been doing this longer than me hard-working, talented people at that. I was frustrated that I wasn't there yet, but "yet" was doing a lot of work in that sentence. The skill came.  Everything falls into place  but on its own schedule, not mine.
+Good things take time. I spent years trying to perform at the level of people who had been doing this longer than me hard-working, talented people at that. I was frustrated that I wasn't there yet, but "yet" was doing a lot of work in that sentence. The growth is happening, even when I can't see it day-to-day. Everything falls into place, but on its own schedule, not mine.
 
 Don't be afraid to try things, to do multiple things, to let something not work out the first time. You have one life to live, live them.
 
