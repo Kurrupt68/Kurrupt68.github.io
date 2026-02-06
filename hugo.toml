@@ -1,0 +1,38 @@
+baseURL = 'https://Kurrupt68.github.io/'
+languageCode = 'en-us'
+title = 'Mathew Alabi | •Kurrupt68'
+theme = 'kurrupt68'
+
+[params]
+  author = "Kurrupt68"
+  description = "Cybersecurity researcher specializing in penetration testing, vulnerability research, and offensive security. This is an attempt to document my dwellings on my security adventures. Welcome to my research journal."
+  image = "/img/author.webp"
+  introQuote = "Mathew Alabi (Kurrupt68)"
+  email = "alabiayokunlet57@gmail.com"
+  twitter = "https://twitter.com/ayokunle_al"
+  github = "https://github.com/Kurrupt68"
+  discord = "https://discord.com"
+  linkedin = "https://www.linkedin.com/in/mathew-ayokunle-alabi/"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 1
+  [[menu.main]]
+    name = "Posts"
+    url = "/post/"
+    weight = 2
+  [[menu.main]]
+    name = "Resume"
+    url = "Mathew-Alabi-Resume.pdf"
+    weight = 3
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

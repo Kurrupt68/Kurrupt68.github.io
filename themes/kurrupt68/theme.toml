@@ -1,0 +1,15 @@
+name = "Kurrupt68"
+license = "MIT"
+licenselink = "https://github.com/Kurrupt68/kurrupt68-theme/blob/master/LICENSE"
+description = "A minimal blog theme for Kurrupt68"
+
+[author]
+  name = "Kurrupt68"
+  homepage = "https://Kurrupt68.github.io"
+
+[original]
+  name = "Custom"
+  homepage = ""
+  repo = ""
+
+min_version = "0.82.0"
