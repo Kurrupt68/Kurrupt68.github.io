@@ -1,0 +1,27 @@
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+{{ if .IsHome }}
+    <title>{{ .Site.Title }}</title>
+    <meta name="description" content="{{ .Site.Params.description }}" >
+    <meta property="og:title" content="{{ .Site.Title }}" />
+    <meta property="og:description" content="{{ .Site.Params.description }}"/>
+    <meta property="og:image" content="{{ .Site.Params.image | absURL }}" />
+    <meta name="keywords" content="Mathew Alabi, Blog, Personal Website, Cybersecurity"/>
+{{ else }}
+    <title>{{ .Title }} | {{ .Site.Title }}</title>
+    <meta name="description" content="{{ .Title }}">
+    <meta property="og:site_name" content="{{ .Title }}" />
+    <meta property="og:title" content="{{ .Site.Title }}" />
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify }}{{ end }}"/>
+    <meta property="og:image" content="{{ .Site.Params.image | absURL }}" />
+    <meta name="keywords" content="{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}"/>
+{{ end }}
+
+<meta name="keywords" content="">
+<link rel="icon" type="image/svg" href='{{ "img/logo.png" | absURL }}'/>
+<meta name="author" content='{{ .Site.Params.author }}'>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Hugo {{ hugo.Version }}" />
+
+<link rel="stylesheet" href="{{ "sass/main.min.css" | absURL }}" type="text/css" media="screen" >

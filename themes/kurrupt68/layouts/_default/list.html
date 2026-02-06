@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    {{ partial "head.html" . }}
+    <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}index.xml" title="{{ .Site.Title }}" />
+</head>
+
+<body>
+      {{ partial "header.html" . }}
+
+<br>
+	<div style="display:flex;align-items:center;">
+		<a class="go-back" href="{{ .Site.BaseURL }}">{{ partial "back-arrow.html" }} </a>
+	<h2 class="post-title">{{ .Title }}</h2>
+	</div>
+        
+        {{ range .Pages }}
+          
+            <div class="post-item">
+              
+                <well class="well">
+                  <h3><a class="link" href="{{ .Permalink }}">{{ .Title }}</a>
+                    {{ with .Params.author }}
+                    by <a class="link" href="">{{ . }}</a>{{ end }}</h3>
+                  
+                    <h4>{{ .Date.Format "January 2, 2006" }} | Reading Time: {{ math.Round (div (countwords .Content) 200.0) }} min </h4>
+                    <span class="tags">
+                        {{ range .Params.tags }}
+                        <h5><a class="tag" href='{{ "tags/" | absURL }}{{ . | urlize }}'>{{ . }}</a></h5>
+                        {{ end }}
+                    </span>
+                    <p>{{ .Summary }}</p>
+                </well>
+                            
+            </div><br>
+          
+        {{ end }}
+        
+{{ partial "footer.html" . }}
+    </body>
+</html>

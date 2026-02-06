@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    {{ partial "head.html" . }}
+    <link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | absURL }}" title="{{ .Site.Title }}" />
+</head>
+
+<body>
+      {{ partial "header.html" . }}
+
+<div class="intro" style="align-items: center">
+  
+  <img class="image" src='{{ .Site.Params.image | absURL }}' 
+	title="" width="200px" 
+	alt="Author's picture or avatar or logo"/>
+  <ul>
+    <li class="intro-quote">{{ .Site.Params.introQuote }}</li>
+  </ul>
+  
+  <p>{{ .Site.Params.description }}</p>
+</div>
+<div class="nav">{{ range .Site.Menus.main }}<a href="{{ .URL | absURL }}">{{ .Name }}</a>{{ end }}
+</div>
+
+{{ partial "footer.html" . }}
+    </body>
+</html>
