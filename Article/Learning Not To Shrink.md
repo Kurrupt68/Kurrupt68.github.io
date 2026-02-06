@@ -1,12 +1,3 @@
----
-title: "Learning Not To Shrink"
-date: 2026-02-04
-lastmod: 2026-02-04
-author: "Kurrupt68"
-description: "There's this thing that happens so quietly you don't notice it at first. You start deciding you can't do things before you even try. This is the story of how I learned to stop shrinking."
-tags: ["personal", "career", "cybersecurity"]
-categories: ["challenges"]
----
 
 There's this thing that happens so quietly you don't notice it at first.
 
@@ -16,8 +7,7 @@ It's not one moment. Nobody sits you down and tells you to think smaller. You ju
 
 That's what shrinking looks like. And for a long time, I didn't even know I was doing it.
 
-
-
+---
 ## The timeline
 
 I started cybersecurity relatively early. Joined a top CTF team winning competitions both locally and globally, got into the community, began working on actual engagements while in uni. On paper, I was doing fine. People I reported to on consulting projects, clients were happy with my work  in fact, impressed. But none of that registered, because I was too busy watching everyone else.
@@ -26,9 +16,8 @@ My peers were landing roles, finding bugs, building structure into their careers
 
 The strange part is, I was already doing the work. I was consulting for companies  multinationals, banks, foreign governments  delivering on engagements, finding vulnerabilities other testers missed. But because it didn't look like what I saw other people doing, because my path didn't match theirs, I treated my own progress like it didn't count.
 
-
-
-## Where are you based?
+---
+## Where are you based? 
 
 There's another layer to this that I need to be honest about.
 
@@ -46,6 +35,7 @@ I'm not saying this to be bitter. I'm saying it because if you're in cybersecuri
 
 
 
+---
 ## Listening Differently
 
 Something eventually shifted. Not overnight, not because of some breakthrough moment  but gradually,  I read something that reframed how I was thinking.
@@ -64,7 +54,9 @@ I won't pretend the imposter syndrome is gone. It still shows up. But I've stopp
 
 
 
-## What I'd tell you
+---
+
+## What I'd tell you 
 
 If you're reading this and any of it sounds familiar, here's what I'd tell you.
 
@@ -80,7 +72,7 @@ And your dreams are valid. I used to think certain things were simply out of rea
 
 If you're not the chosen one — choose yourself.
 
-
+---
 
 ## Still here
 
